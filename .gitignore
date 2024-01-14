@@ -1,0 +1,6 @@
+# IDEA
+/.idea/
+# CMake
+/*build*/
+# Dependencies
+/deps/
