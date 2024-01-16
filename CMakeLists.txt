@@ -1,14 +1,29 @@
 cmake_minimum_required(VERSION 3.27)
 project(ml_bootstrap)
 
-set(CMAKE_CXX_STANDARD 17)
-
 if (MSVC)
     add_compile_options(/DTFLITE_MMAP_DISABLED)
 endif ()
 
 include(cmake/tflite-micro.cmake)
 include(cmake/utils.cmake)
+
+add_compile_options(
+        $<$<COMPILE_LANGUAGE:C>:-std=gnu17>
+        $<$<COMPILE_LANGUAGE:CXX>:-std=gnu++17>
+)
+add_compile_options(-mcpu=cortex-m7 -mfpu=vfpv4-d16)
+add_compile_options(
+        -fno-unwind-tables -ffunction-sections -fdata-sections -fmessage-length=0
+        $<$<COMPILE_LANGUAGE:CXX>:-fno-rtti>
+        $<$<COMPILE_LANGUAGE:CXX>:-fno-exceptions>
+        $<$<COMPILE_LANGUAGE:CXX>:-fno-threadsafe-statics>)
+add_compile_options(
+        -Wsign-compare -Wdouble-promotion -Wshadow
+        -Wunused-variable -Wmissing-field-initializers
+        -Wno-return-type -Wno-strict-aliasing
+        -Wunused-function -Wswitch -Wvla -Wall -Wextra
+        -Wstrict-aliasing -Wno-unused-parameter -Wno-nonnull)
 
 message("tflite-micro dir: ${tflite_dir}")
 message("tflite-micro src: ${lib_srcs}")

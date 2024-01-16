@@ -13,6 +13,23 @@
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/cmake-build-arm-debug",
       "toolchainFile": "cmake/arm-gcc-toolchain.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      },
+      "environment": {
+        "PATH": "D:\\Projects\\toolchains\\xpack-arm-none-eabi-gcc-13.2.1-1.1-win32-x64\\xpack-arm-none-eabi-gcc-13.2.1-1.1\\bin;$penv{PATH}"
+      }
+    },
+    {
+      "name": "arm-release",
+      "displayName": "ARM GCC Release",
+      "description": "ARM GCC Release configuration with Ninja generator",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/cmake-build-arm-release",
+      "toolchainFile": "cmake/arm-gcc-toolchain.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      },
       "environment": {
         "PATH": "D:\\Projects\\toolchains\\xpack-arm-none-eabi-gcc-13.2.1-1.1-win32-x64\\xpack-arm-none-eabi-gcc-13.2.1-1.1\\bin;$penv{PATH}"
       }
@@ -22,6 +39,10 @@
     {
       "name": "arm-debug",
       "configurePreset": "arm-debug"
+    },
+    {
+      "name": "arm-release",
+      "configurePreset": "arm-release"
     }
   ]
 }
