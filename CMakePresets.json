@@ -1,0 +1,27 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 23,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "arm-debug",
+      "displayName": "ARM GCC Debug",
+      "description": "ARM GCC Debug configuration with Ninja generator",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/cmake-build-arm-debug",
+      "toolchainFile": "cmake/arm-gcc-toolchain.cmake",
+      "environment": {
+        "PATH": "D:\\Projects\\toolchains\\xpack-arm-none-eabi-gcc-13.2.1-1.1-win32-x64\\xpack-arm-none-eabi-gcc-13.2.1-1.1\\bin;$penv{PATH}"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "arm-debug",
+      "configurePreset": "arm-debug"
+    }
+  ]
+}
