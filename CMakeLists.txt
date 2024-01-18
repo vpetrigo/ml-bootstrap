@@ -37,8 +37,12 @@ add_library(tflite-micro OBJECT ${lib_srcs})
 target_include_directories(tflite-micro PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}/deps/tflite-micro)
 target_compile_definitions(tflite-micro PRIVATE -DFARMHASH_NO_CXX_STRING)
-target_link_libraries(tflite-micro PRIVATE
-        zephyr_interface kissfft flatbuffers fixedpoint ruy)
+target_link_libraries(tflite-micro
+        PRIVATE
+        zephyr_interface kissfft ruy
+        PUBLIC
+        flatbuffers fixedpoint
+)
 add_zephyr_interface_to_library(tflite-micro)
 
 add_subdirectory(src/)
