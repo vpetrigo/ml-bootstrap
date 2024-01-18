@@ -36,11 +36,6 @@ constexpr float radians_to_degrees(const float rad) {
 } // namespace
 
 int main(void) {
-    //    for (;;) {
-    //        printf("Hello world\n");
-    //        k_sleep(K_TIMEOUT_ABS_MS(2000));
-    //    }
-
     HelloWorldOpResolver op_resolver;
     TF_LITE_ENSURE_STATUS(RegisterOps(op_resolver));
     const tflite::Model *model = ::tflite::GetModel(model_get());
@@ -80,7 +75,7 @@ int main(void) {
             std::cout << "Library execution time: " << time_ns_lib << " ns\n";
             k_sleep(K_MSEC(400));
         }
-        std::cout << "Hello World" << '\n';
+
         timing_stop();
         k_sleep(K_SECONDS(2));
     }
