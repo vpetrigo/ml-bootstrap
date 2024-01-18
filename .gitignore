@@ -4,3 +4,6 @@
 /*build*/
 # Dependencies
 /deps/
+
+# Python
+/.venv/
