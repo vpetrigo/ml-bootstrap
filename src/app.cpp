@@ -44,8 +44,8 @@ int main(void) {
     tflite::MicroInterpreter interpreter{model, op_resolver, tensor_arena.data(), tensor_arena_size};
 
     TF_LITE_ENSURE_STATUS(interpreter.AllocateTensors());
-    float *input_tensor = interpreter.typed_input_tensor<float>(0);
-    const float *output_tensor = interpreter.typed_output_tensor<float>(0);
+    auto input_tensor = interpreter.typed_input_tensor<float>(0);
+    const auto output_tensor = interpreter.typed_output_tensor<float>(0);
     timing_t start;
     timing_t end;
 
@@ -53,7 +53,7 @@ int main(void) {
         timing_init();
         timing_start();
 
-        for (float i = 0.f; i <= 2 * M_PI; i += M_PI / 8) {
+        for (float i = 0.f; i <= 2 * M_PI; i += M_PI / 8.) {
             input_tensor[0] = i;
             start = timing_counter_get();
             interpreter.Invoke();
