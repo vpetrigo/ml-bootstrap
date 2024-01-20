@@ -23,8 +23,15 @@ set(OPTIMIZED_KERNEL_NAME CMSIS_NN)
 # CMSIS
 add_library(cmsis INTERFACE)
 target_include_directories(cmsis INTERFACE
-        ${CMAKE_CURRENT_LIST_DIR}/deps/CMSIS_5/Device/ARM/ARMCM7/Include)
-add_subdirectory(deps/CMSIS_5/CMSIS/NN)
+        ${CMAKE_CURRENT_LIST_DIR}/deps/CMSIS_5/Device/ARM/ARMCM7/Include
+)
+add_subdirectory(deps/CMSIS_NN)
+add_zephyr_interface_to_library(cmsis-nn)
+add_library(cmsis-nn-interface INTERFACE)
+target_include_directories(cmsis-nn-interface INTERFACE
+        ${CMAKE_CURRENT_LIST_DIR}/deps/CMSIS_NN/Include
+        ${CMAKE_CURRENT_LIST_DIR}/deps/CMSIS_NN
+)
 # kissfft
 add_library(kissfft deps/kissfft/kiss_fft.c deps/kissfft/tools/kiss_fftr.c)
 target_include_directories(kissfft PUBLIC ${CMAKE_CURRENT_LIST_DIR}/deps/kissfft)
@@ -55,12 +62,12 @@ target_compile_definitions(tflite-micro
         -DCMSIS_DEVICE_ARM_CORTEX_M_XX_HEADER_FILE=\"${ARM_CPU}${FPU_FEATURES}.h\"
         -D${ARM_CPU} -D${OPTIMIZED_KERNEL_NAME}
 )
+target_compile_options(tflite-micro PUBLIC $<$<COMPILE_LANGUAGE:CXX>:-fno-threadsafe-statics>)
 target_link_libraries(tflite-micro
         PRIVATE
         zephyr_interface kissfft ruy
-        cmsis
-        cmsis-nn
         PUBLIC
+        cmsis cmsis-nn cmsis-nn-interface
         flatbuffers fixedpoint
 )
 add_zephyr_interface_to_library(tflite-micro)
