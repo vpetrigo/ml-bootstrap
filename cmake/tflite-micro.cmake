@@ -11,6 +11,7 @@ if (FALSE)
     )
 else ()
     # Cortex-M specific
+    # Use along with the CMSIS-NN library
     set(srcs_micro_platform
             ${CMAKE_CURRENT_SOURCE_DIR}/deps/tflite-micro/tensorflow/lite/micro/cortex_m_generic/debug_log.cc
             ${CMAKE_CURRENT_SOURCE_DIR}/deps/tflite-micro/tensorflow/lite/micro/cortex_m_generic/debug_log_callback.h
