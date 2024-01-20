@@ -72,16 +72,43 @@ set(srcs_micro_tflite_bridge
         ${CMAKE_CURRENT_SOURCE_DIR}/deps/tflite-micro/tensorflow/lite/micro/tflite_bridge/micro_error_reporter.h
 )
 
-#file(GLOB srcs_micro
-#        "${tfmicro_dir}/*.cc"
-#        "${tfmicro_dir}/*.c"
-#        "${tfmicro_dir}/tflite_bridge/*.cc"
-#        "${tfmicro_dir}/tflite_bridge/*.c"
-#        "${tfmicro_dir}")
-
 file(GLOB src_micro_frontend
         "${tfmicro_frontend_dir}/*.c"
         "${tfmicro_frontend_dir}/*.cc")
+
+file(GLOB src_micro_kernels_common
+        "${tfmicro_kernels_dir}/*.c"
+        "${tfmicro_kernels_dir}/*.cc"
+)
+
+list(FILTER src_micro_kernels_common EXCLUDE REGEX "(add.cc|conv.cc|depthwise_conv.cc|fully_connected.cc|mul.cc|pooling.cc|softmax.cc|svdf.cc|transpose_conv.cc|unidirectional_sequence_lstm.cc)")
+
+if (FALSE)
+    set(src_micro_kernels
+            ${tfmicro_dir}/kernels/add.cc
+            ${tfmicro_dir}/kernels/conv.cc
+            ${tfmicro_dir}/kernels/depthwise_conv.cc
+            ${tfmicro_dir}/kernels/fully_connected.cc
+            ${tfmicro_dir}/kernels/mul.cc
+            ${tfmicro_dir}/kernels/pooling.cc
+            ${tfmicro_dir}/kernels/softmax.cc
+            ${tfmicro_dir}/kernels/svdf.cc
+            ${tfmicro_dir}/kernels/transpose_conv.cc
+            ${tfmicro_dir}/kernels/unidirectional_sequence_lstm.cc)
+else ()
+    set(src_micro_kernels
+            ${CMAKE_CURRENT_SOURCE_DIR}/deps/tflite-micro/tensorflow/lite/micro/kernels/cmsis_nn/add.cc
+            ${CMAKE_CURRENT_SOURCE_DIR}/deps/tflite-micro/tensorflow/lite/micro/kernels/cmsis_nn/conv.cc
+            ${CMAKE_CURRENT_SOURCE_DIR}/deps/tflite-micro/tensorflow/lite/micro/kernels/cmsis_nn/depthwise_conv.cc
+            ${CMAKE_CURRENT_SOURCE_DIR}/deps/tflite-micro/tensorflow/lite/micro/kernels/cmsis_nn/fully_connected.cc
+            ${CMAKE_CURRENT_SOURCE_DIR}/deps/tflite-micro/tensorflow/lite/micro/kernels/cmsis_nn/mul.cc
+            ${CMAKE_CURRENT_SOURCE_DIR}/deps/tflite-micro/tensorflow/lite/micro/kernels/cmsis_nn/pooling.cc
+            ${CMAKE_CURRENT_SOURCE_DIR}/deps/tflite-micro/tensorflow/lite/micro/kernels/cmsis_nn/softmax.cc
+            ${CMAKE_CURRENT_SOURCE_DIR}/deps/tflite-micro/tensorflow/lite/micro/kernels/cmsis_nn/svdf.cc
+            ${CMAKE_CURRENT_SOURCE_DIR}/deps/tflite-micro/tensorflow/lite/micro/kernels/cmsis_nn/transpose_conv.cc
+            ${CMAKE_CURRENT_SOURCE_DIR}/deps/tflite-micro/tensorflow/lite/micro/kernels/cmsis_nn/unidirectional_sequence_lstm.cc
+    )
+endif ()
 
 file(GLOB srcs_kernels
         "${tflite_dir}/kernels/internal/*.c"
@@ -90,8 +117,7 @@ file(GLOB srcs_kernels
         "${tflite_dir}/kernels/internal/reference/*.cc"
         "${tflite_dir}/kernels/*.c"
         "${tflite_dir}/kernels/*.cc"
-        "${tfmicro_kernels_dir}/*.c"
-        "${tfmicro_kernels_dir}/*.cc")
+)
 
 file(GLOB srcs_mem
         "${tfmicro_dir}/arena_allocator/persistent_arena_buffer_allocator.cc"
@@ -118,7 +144,10 @@ set(lib_srcs
         "${srcs_core}"
         "${srcs_micro}"
         "${srcs_micro_tflite_bridge}"
+        "${srcs_kernels_specific}"
         "${srcs_kernels}"
+        "${src_micro_kernels_common}"
+        "${src_micro_kernels}"
         "${src_micro_frontend}"
         "${srcs_schemas}"
         "${srcs_mem}"
