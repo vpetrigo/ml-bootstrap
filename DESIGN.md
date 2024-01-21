@@ -1,37 +1,27 @@
-# Initial tflite-micro integration results
+# Benchmarks
 
-- Simple prediction of the `sin` function (with `-Os` optimization):
+- Build with the FPU enabled and `-O2` optimization level
 
-```
-Sin(270) output: model - -1.00883 lib - -1
-Model execution time: 22148 ns
-Library execution time: 763 ns
-Sin(292.5) output: model - -0.915045 lib - -0.923879
-Model execution time: 22013 ns
-Library execution time: 750 ns
-Sin(315) output: model - -0.710789 lib - -0.707107
-Model execution time: 22064 ns
-Library execution time: 805 ns
-Sin(337.5) output: model - -0.380449 lib - -0.382683
-Model execution time: 22041 ns
-Library execution time: 666 ns
-```
+## TensorFlow Lite with the standard kernel
 
-# tflite-micro with CMSIS-NN
-
-- Simple prediction of the `sin` function (with `-O2` optimization):
+- Run `10000` iterations from 0 to 360 degress with the standard TensorFlow Lite kernels:
 
 ```
-Sin(270) output: model - -1.00883 lib - -1
-Model execution time: 22412 ns
-Library execution time: 791 ns
-Sin(292.5) output: model - -0.915045 lib - -0.923879
-Model execution time: 22222 ns
-Library execution time: 703 ns
-Sin(315) output: model - -0.710789 lib - -0.707107
-Model execution time: 22236 ns
-Library execution time: 763 ns
-Sin(337.5) output: model - -0.380449 lib - -0.382683
-Model execution time: 22509 ns
-Library execution time: 763 ns
+Benchmarking result (float model):
+  model execution time (ns): 21283
+  library execution time (ns): 630
+Benchmarking result (quantized [int8] model):
+  model execution time (ns): 24122
+  library execution time (ns): 629
+```
+
+## TensorFlow Lite with the CMSIS-NN kernel
+
+```
+Benchmarking result (float model):
+  model execution time (ns): 21473
+  library execution time (ns): 630
+Benchmarking result (quantized [int8] model):
+  model execution time (ns): 16988
+  library execution time (ns): 666
 ```
