@@ -137,13 +137,12 @@ BenchmarkResult benchmark_runner(const unsigned char *tflite_model) {
     uint64_t lib_execution_time_avg{0};
     ModelWorker<T> worker{interpreter};
 
-    timing_init();
-    timing_start();
-
-    for (std::size_t i = 0; i < 10000; ++i) {
+    for (std::size_t i = 0; i < 100000; ++i) {
         for (float angle = 0.f; angle <= 2 * M_PI; angle += M_PI / 8.) {
             worker.SetInputValue(angle);
 
+            timing_init();
+            timing_start();
             start = timing_counter_get();
             TFLITE_CHECK_EQ(worker.Invoke(), kTfLiteOk);
             const float result_model = worker.GetValue();
@@ -160,10 +159,9 @@ BenchmarkResult benchmark_runner(const unsigned char *tflite_model) {
             lib_execution_time_avg = calculate_average(lib_execution_time_avg, time_ns_lib, iteration);
             TFLITE_CHECK_LE(fabsf(result_lib - result_model), epsilon);
             ++iteration;
+            timing_stop();
         }
     }
-
-    timing_stop();
 
     return std::make_pair(model_execution_time_avg, lib_execution_time_avg);
 }
