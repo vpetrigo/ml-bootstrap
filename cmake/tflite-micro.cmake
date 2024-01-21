@@ -4,7 +4,7 @@ set(tfmicro_frontend_dir "${tflite_dir}/experimental/microfrontend/lib")
 set(tfmicro_kernels_dir "${tfmicro_dir}/kernels")
 
 
-if (FALSE)
+if (NOT ENABLE_CMSIS_NN)
     set(srcs_micro_platform
             ${CMAKE_CURRENT_SOURCE_DIR}/deps/tflite-micro/tensorflow/lite/micro/micro_time.cc
             ${CMAKE_CURRENT_SOURCE_DIR}/deps/tflite-micro/tensorflow/lite/micro/debug_log.cc
@@ -83,7 +83,7 @@ file(GLOB src_micro_kernels_common
 
 list(FILTER src_micro_kernels_common EXCLUDE REGEX "(add.cc|conv.cc|depthwise_conv.cc|fully_connected.cc|mul.cc|pooling.cc|softmax.cc|svdf.cc|transpose_conv.cc|unidirectional_sequence_lstm.cc)")
 
-if (FALSE)
+if (NOT ENABLE_CMSIS_NN)
     set(src_micro_kernels
             ${tfmicro_dir}/kernels/add.cc
             ${tfmicro_dir}/kernels/conv.cc
