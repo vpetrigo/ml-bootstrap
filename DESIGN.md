@@ -4,24 +4,24 @@
 
 ## TensorFlow Lite with the standard kernel
 
-- Run `10000` iterations from 0 to 360 degress with the standard TensorFlow Lite kernels:
+- Run `100000` iterations from 0 to 360 degress with the standard TensorFlow Lite kernels:
 
 ```
 Benchmarking result (float model):
-  model execution time (ns): 21283
-  library execution time (ns): 630
+  model execution time (ns): 21354
+  library execution time (ns): 636
 Benchmarking result (quantized [int8] model):
-  model execution time (ns): 24122
-  library execution time (ns): 629
+  model execution time (ns): 24132
+  library execution time (ns): 639
 ```
 
 ## TensorFlow Lite with the CMSIS-NN kernel
 
 ```
 Benchmarking result (float model):
-  model execution time (ns): 21473
+  model execution time (ns): 21475
   library execution time (ns): 630
 Benchmarking result (quantized [int8] model):
-  model execution time (ns): 16988
-  library execution time (ns): 666
+  model execution time (ns): 16973
+  library execution time (ns): 634
 ```
