@@ -34,6 +34,7 @@ target_include_directories(cmsis-nn-interface INTERFACE
 )
 # kissfft
 add_library(kissfft deps/kissfft/kiss_fft.c deps/kissfft/tools/kiss_fftr.c)
+target_compile_definitions(kissfft PUBLIC -DFIXED_POINT=16)
 target_include_directories(kissfft PUBLIC ${CMAKE_CURRENT_LIST_DIR}/deps/kissfft)
 add_zephyr_interface_to_library(kissfft)
 ## Flatbuffers
