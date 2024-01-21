@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5...3.27)
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 project(ml_bootstrap)
 
-
+option(ENABLE_CMSIS_NN "Enable tflite-micro CMSIS-NN optimized kernel" ON)
 include(cmake/tflite-micro.cmake)
 include(cmake/utils.cmake)
 
@@ -59,8 +59,8 @@ target_compile_definitions(tflite-micro
         -DFARMHASH_NO_CXX_STRING
         PUBLIC
         # CMSIS-NN specific defines
-        -DCMSIS_DEVICE_ARM_CORTEX_M_XX_HEADER_FILE=\"${ARM_CPU}${FPU_FEATURES}.h\"
-        -D${ARM_CPU} -D${OPTIMIZED_KERNEL_NAME}
+        $<$<BOOL:${ENABLE_CMSIS_NN}>:-DCMSIS_DEVICE_ARM_CORTEX_M_XX_HEADER_FILE=\"${ARM_CPU}${FPU_FEATURES}.h\">
+        $<$<BOOL:${ENABLE_CMSIS_NN}>:-D${ARM_CPU}> $<$<BOOL:${ENABLE_CMSIS_NN}>:-D${OPTIMIZED_KERNEL_NAME}>
 )
 target_compile_options(tflite-micro PUBLIC $<$<COMPILE_LANGUAGE:CXX>:-fno-threadsafe-statics>)
 target_link_libraries(tflite-micro
